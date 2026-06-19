@@ -1,0 +1,120 @@
+const Task = require("../models/Task")
+
+const createTask = async (req,res)=>{
+    
+    try {
+        // Fetch the Details
+    const {title,description,status,priority,dueDate} = req.body
+    //Create a New Task
+    const task = await Task.create({
+        title,description,status,priority,dueDate,user:req.user.userId
+    })
+
+    return res.status(201).json({
+        message:'Task Created Successfully',
+        task,
+    })
+    } catch (error) {
+        return res.status(500).json({
+            message:'Task Creation Failed',error:error.message
+        })
+    }
+}
+
+const getMyTask = async (req,res)=>{
+    try {
+        //Fetch the Details from the Task
+        const tasks = await Task.find({user:req.user.userId})
+    
+        return res.status(200).json({
+            tasks
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"Failed in Getting All Tasks",error:error.message
+        })
+    }
+}
+
+const updateTask = async (req,res)=>{
+    try {
+
+        const {title,description,status,priority,dueDate} = req.body
+
+        const task = await Task.findById(req.params.id)
+
+        if (!task) {
+    return res.status(404).json({
+        message:"Task Not Found"
+    })
+}
+
+        if(task.user.toString() !== req.user.userId){
+            return res.status(403).json({
+                message:"Not Authorized"
+            })
+        }
+
+        const updatedTask = await Task.findByIdAndUpdate(
+    req.params.id,
+    {
+        title,
+        description,
+        status,
+        priority,
+        dueDate
+    },
+    {
+        new:true
+    }
+)
+
+        return res.status(200).json({
+            message:"Task Updated Successfully",
+            task: updatedTask
+        })
+
+    } catch (error) {
+
+        return res.status(500).json({
+            message:"Task Updation Failed",
+            error:error.message
+        })
+
+    }
+}
+
+const deleteTask = async (req,res)=>{
+    try {
+        const task = await Task.findById(req.params.id)
+
+        if (!task) {
+            return res.status(404).json({
+                message:"Task Not Found",
+            })
+        }
+
+        if (task.user.toString() !== req.user.userId) {
+            return res.status(403).json({
+                message:"Not Authorized"
+            })
+        }
+
+        await Task.findByIdAndDelete(req.params.id)
+        return res.status(200).json({
+            message:"Task Was Deleted Succussfully",
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            message:"Task Deletion Failed",error:error.message,
+        })
+    }
+}
+
+module.exports = {
+    createTask,
+    getMyTask,
+    updateTask,
+    deleteTask,
+}
