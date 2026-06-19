@@ -24,7 +24,8 @@ const createTask = async (req,res)=>{
 const getMyTask = async (req,res)=>{
     try {
         //Fields to filter
-        const {status,priority} = req.query
+        const {status,priority,sort} = req.query
+        const { q } = req.query;
         // Create Filter
         const filter = {user:req.user.userId}
         
@@ -35,8 +36,23 @@ const getMyTask = async (req,res)=>{
             filter.priority = priority
         }
 
-        const tasks = await Task.find(filter)
-        
+        let sortOption = {}
+        if(sort === "latest"){
+            sortOption = {createdAt:-1}
+        }
+        if (sort === "oldest") {
+            sortOption = {createdAt:1}
+        }
+
+        if(q){
+    filter.title = {
+        $regex:q,
+        $options:"i"
+    };
+}
+
+        const tasks = await Task.find(filter).sort(sortOption);
+
         return res.status(200).json({
             tasks
         })
@@ -136,16 +152,47 @@ const getTaskStats = async (req,res)=>{
             user:req.user.userId,
             status:"pending",
         })
-
+        const highPriorityTasks = await Task.countDocuments({
+            user:req.user.userId,
+            priority:"high",
+        })
         return res.status(200).json({
             totalTasks,
             completedTasks,
             pendingTasks,
+            highPriorityTasks,
         })
         
     } catch (error) {
         return res.status(500).json({
             message:"Error Fetching in Task Statistics",error:error.message
+        })
+    }
+}
+
+const completeTask = async (req,res) =>{
+
+    try {
+        //Fetch the Task to be Completed 
+        const task = await Task.findById(req.params.id)
+    
+        if(!task){
+            return res.status(404).json({
+                message:"Task Not Found",
+            })
+        }
+        task.status = "completed"
+        task.completedAt = new Date()
+        
+        await task.save()
+        
+        return res.status(200).json({
+            message:"Task Completed Successfully",task
+        })
+        
+    } catch (error) {
+        return res.status(500).json({
+            message:error.message
         })
     }
 }
@@ -156,4 +203,5 @@ module.exports = {
     updateTask,
     deleteTask,
     getTaskStats,
+    completeTask,
 }
