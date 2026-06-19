@@ -23,9 +23,20 @@ const createTask = async (req,res)=>{
 
 const getMyTask = async (req,res)=>{
     try {
-        //Fetch the Details from the Task
-        const tasks = await Task.find({user:req.user.userId})
-    
+        //Fields to filter
+        const {status,priority} = req.query
+        // Create Filter
+        const filter = {user:req.user.userId}
+        
+        if (status) {
+            filter.status = status
+        }
+        if (priority) {
+            filter.priority = priority
+        }
+
+        const tasks = await Task.find(filter)
+        
         return res.status(200).json({
             tasks
         })
@@ -65,7 +76,7 @@ const updateTask = async (req,res)=>{
         dueDate
     },
     {
-        new:true
+        returnDocument:"after"
     }
 )
 
@@ -112,9 +123,37 @@ const deleteTask = async (req,res)=>{
     }
 }
 
+const getTaskStats = async (req,res)=>{
+    try {
+        const totalTasks = await Task.countDocuments({
+            user:req.user.userId
+        })
+        const completedTasks = await Task.countDocuments({
+            user:req.user.userId,
+            status:"completed",
+        })
+        const pendingTasks = await Task.countDocuments({
+            user:req.user.userId,
+            status:"pending",
+        })
+
+        return res.status(200).json({
+            totalTasks,
+            completedTasks,
+            pendingTasks,
+        })
+        
+    } catch (error) {
+        return res.status(500).json({
+            message:"Error Fetching in Task Statistics",error:error.message
+        })
+    }
+}
+
 module.exports = {
     createTask,
     getMyTask,
     updateTask,
     deleteTask,
+    getTaskStats,
 }
