@@ -1,13 +1,16 @@
 const Task = require("../models/Task")
+const getNextDueDate = require("../utils/recurringTasks")
 
 const createTask = async (req,res)=>{
     
     try {
         // Fetch the Details
-    const {title,description,status,priority,dueDate} = req.body
+    const {title,description,status,priority,dueDate,isRecurring,recurringType} = req.body
     //Create a New Task
     const task = await Task.create({
-        title,description,status,priority,dueDate,user:req.user.userId
+        title,description,status,priority,dueDate,user:req.user.userId,
+        isRecurring,
+        recurringType
     })
 
     return res.status(201).json({
@@ -186,10 +189,25 @@ const completeTask = async (req,res) =>{
         
         await task.save()
         
+        
+        if (task.isRecurring) {
+            const nextDueDate = getNextDueDate(task.dueDate,task.recurringType)
+            console.log(nextDueDate);
+            await Task.create({
+                title:task.title,
+                description:task.description,
+                status:"pending",
+                priority:task.priority,
+                dueDate:nextDueDate,
+                user:task.user,
+                isRecurring:task.isRecurring,
+                recurringType:task.recurringType,
+            })
+        }
+        
         return res.status(200).json({
             message:"Task Completed Successfully",task
         })
-        
     } catch (error) {
         return res.status(500).json({
             message:error.message

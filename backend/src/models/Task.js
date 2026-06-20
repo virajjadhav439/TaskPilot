@@ -31,10 +31,19 @@ const taskSchema = new mongoose.Schema({
     completedAt:{
         type:Date
     },
+    isRecurring:{
+        type:Boolean,
+        default:false,
+    },
+    recurringType:{
+        type:String,
+        enum:["daily","weekly","monthly",null],
+        default:null,
+    },
 },{
     timestamps:true,
 })
 
-const task = mongoose.model('Task',taskSchema)
+const Task = mongoose.model('Task',taskSchema)
 
-module.exports = task
+module.exports = Task
