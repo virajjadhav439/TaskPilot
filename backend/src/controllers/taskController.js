@@ -215,6 +215,28 @@ const completeTask = async (req,res) =>{
     }
 }
 
+const getAnalytics = async (req,res)=>{
+    try {
+        const totalTasks = await Task.countDocuments({user:req.user.userId})
+        const completedTasks = await Task.countDocuments({user:req.user.userId,status:"completed"})
+        const pendingTasks = await Task.countDocuments({user:req.user.userId,status:"pending"})
+        const highPriorityTasks = await Task.countDocuments({user:req.user.userId,priority:"high"})
+        const completionRate = totalTasks === 0 ? 0 :((completedTasks/totalTasks)*100).toFixed(2)
+
+        return res.status(200).json({
+            totalTasks,
+            completedTasks,
+            pendingTasks,
+            highPriorityTasks,
+            completionRate: `${completionRate}%`,
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:error.message
+        })
+    }
+}
+
 module.exports = {
     createTask,
     getMyTask,
@@ -222,4 +244,5 @@ module.exports = {
     deleteTask,
     getTaskStats,
     completeTask,
+    getAnalytics,
 }
