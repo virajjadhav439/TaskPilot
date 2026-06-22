@@ -23,6 +23,7 @@ const Dashboard = () => {
   useEffect(()=>{
     fetchTasks()
 },[])
+
   return (<>
     <Navbar/>
     <div>

@@ -1,8 +1,42 @@
 import React from 'react'
 
-const StatusCards = () => {
+const StatusCards = ({analytics}) => {
+
+  const cards = [
+  {
+    title: "Total Tasks",
+    value: analytics.totalTasks,
+  },
+  {
+    title: "Completed Tasks",
+    value: analytics.completedTasks,
+  },
+  {
+    title: "Pending Tasks",
+    value: analytics.pendingTasks,
+  },
+  {
+    title: "High Priority Tasks",
+    value: analytics.highPriorityTasks,
+  },
+  {
+    title: "Completion Rate",
+    value: analytics.completionRate,
+  },
+]
+
   return (
-    <div>StatusCards</div>
+  <>
+  <div>
+    {cards.map((card) => (
+      <div key={card.title}>
+        <h3>{card.title}</h3>
+        <p>{card.value}</p>
+      </div>
+    ))}
+  </div>
+
+  </>
   )
 }
 
