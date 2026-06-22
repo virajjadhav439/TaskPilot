@@ -7,6 +7,10 @@ const TaskCard = ({task,fetchTasks}) => {
   const [isEditing,setIsEditing] = useState(false)
   const [title,setTitle] = useState(task.title)
   const [priority,setPriority] = useState(task.priority)
+  const [description,setDescription] =useState(task.description)
+  const [dueDate,setDueDate] =useState(task.dueDate ? task.dueDate.split("T")[0]: "")
+  const [isRecurring,setIsRecurring] = useState(task.isRecurring)
+  const [recurringType,setRecurringType] = useState(task.recurringType || "daily")
 
   const handleUpdateTask = async (id,data)=>{
   try {
@@ -64,6 +68,56 @@ toast.success(
         onChange={(e)=>setTitle(e.target.value)}
       />
 
+      <textarea
+  value={description}
+  onChange={(e)=>
+    setDescription(e.target.value)
+  }
+/>
+
+<input
+  type="date"
+  value={dueDate}
+  onChange={(e)=>
+    setDueDate(e.target.value)
+  }
+/>
+
+<label>
+
+  <input
+    type="checkbox"
+    checked={isRecurring}
+    onChange={(e)=>
+      setIsRecurring(e.target.checked)
+    }
+  />
+
+  Recurring
+
+</label>
+{isRecurring && (
+  <select
+    value={recurringType}
+    onChange={(e)=>
+      setRecurringType(e.target.value)
+    }
+  >
+    <option value="daily">
+      Daily
+    </option>
+
+    <option value="weekly">
+      Weekly
+    </option>
+
+    <option value="monthly">
+      Monthly
+    </option>
+
+  </select>
+)}
+
       <select
         value={priority}
         onChange={(e)=>setPriority(e.target.value)}
@@ -75,10 +129,20 @@ toast.success(
 
       <button
         onClick={() =>
-          handleUpdateTask(task._id,{
-            title,
-            priority
-          })
+          handleUpdateTask(
+  task._id,
+  {
+    title,
+    description,
+    priority,
+    dueDate,
+    isRecurring,
+    recurringType:
+      isRecurring
+        ? recurringType
+        : null
+  }
+)
         }
       >
         Save
@@ -126,11 +190,13 @@ toast.success(
   Recurring:
   {task.isRecurring ? "Yes" : "No"}
 </p>
-      <button
-        onClick={() => setIsEditing(true)}
-      >
-        <PenLine/>
-      </button>
+      {task.status !== "completed" && (
+  <button
+    onClick={() => setIsEditing(true)}
+  >
+    <PenLine />
+  </button>
+)}
 
       <button
         onClick={() =>
