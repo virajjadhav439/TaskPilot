@@ -1,4 +1,4 @@
-import { deleteTask, updateTask } from '@/services/taskApi'
+import { completeTask, deleteTask, updateTask } from '@/services/taskApi'
 import { PenLine, Trash } from 'lucide-react'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -29,7 +29,7 @@ const TaskCard = ({task,fetchTasks}) => {
 
   const handleDeleteTask= async (id)=>{
     try {
-      console.log(id);
+      
       const response = await deleteTask(id)
       console.log(response.data);
       toast.success("Task Deleted")
@@ -39,6 +39,19 @@ const TaskCard = ({task,fetchTasks}) => {
     }
   }
   
+  const handleCompleteTask = async (id)=>{
+    try {
+      const response =
+   await completeTask(id)
+
+toast.success(
+   response.data.message
+)
+      fetchTasks()
+    } catch (error) {
+      
+    }
+  }
   return (
     <>
     <div>
@@ -83,12 +96,36 @@ const TaskCard = ({task,fetchTasks}) => {
     </>
   ) : (
     <>
-      <h3>{task.title}</h3>
+    <input
+  type="checkbox"
+  checked={task.status === "completed"}
+  disabled={
+    task.isRecurring &&
+    task.status === "completed"
+  }
+  onChange={() =>
+    handleCompleteTask(task._id)
+  }
+/>
+
+      <h3
+  style={{
+    textDecoration:
+      task.status === "completed"
+        ? "line-through"
+        : "none"
+  }}
+>
+  {task.title}
+</h3>
 
       <p>{task.status}</p>
 
       <p>{task.priority}</p>
-
+  <p>
+  Recurring:
+  {task.isRecurring ? "Yes" : "No"}
+</p>
       <button
         onClick={() => setIsEditing(true)}
       >
@@ -102,6 +139,7 @@ const TaskCard = ({task,fetchTasks}) => {
       >
         <Trash />
       </button>
+      <p>{task.dueDate}</p>
     </>
   )}
 

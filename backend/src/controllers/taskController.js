@@ -176,6 +176,7 @@ const getTaskStats = async (req,res)=>{
 const completeTask = async (req,res) =>{
 
     try {
+        
         //Fetch the Task to be Completed 
         const task = await Task.findById(req.params.id)
     
@@ -184,35 +185,67 @@ const completeTask = async (req,res) =>{
                 message:"Task Not Found",
             })
         }
-        task.status = "completed"
-        task.completedAt = new Date()
+        console.log("Task ID:", req.params.id)
+console.log("Before:", task.status)
+        const wasPending = task.status === "pending"
         
-        await task.save()
-        
-        
-        if (task.isRecurring) {
-            const nextDueDate = getNextDueDate(task.dueDate,task.recurringType)
-            console.log(nextDueDate);
-            await Task.create({
-                title:task.title,
-                description:task.description,
-                status:"pending",
-                priority:task.priority,
-                dueDate:nextDueDate,
-                user:task.user,
-                isRecurring:task.isRecurring,
-                recurringType:task.recurringType,
-            })
+        if(wasPending){
+            
+            task.status = "completed"
+            task.completedAt = new Date()
+            
+        }else{
+            
+            task.status = "pending"
+            task.completedAt = null
+            
         }
         
+
+await task.save()
+
+if(task.isRecurring && wasPending){
+    console.log(
+      "Creating Next Recurring Task"
+    )
+
+    const nextDueDate =
+      getNextDueDate(
+        task.dueDate,
+        task.recurringType
+      )
+
+      console.log("Current Due Date:", task.dueDate)
+console.log("Recurring Type:", task.recurringType)
+console.log("Next Due Date:", nextDueDate)
+
+    await Task.create({
+        title:task.title,
+        description:task.description,
+        status:"pending",
+        priority:task.priority,
+        dueDate:nextDueDate,
+        user:task.user,
+        isRecurring:true,
+        recurringType:task.recurringType,
+    })
+}
+        
         return res.status(200).json({
-            message:"Task Completed Successfully",task
-        })
+    message:
+      task.status === "completed"
+      ? "Task Completed Successfully"
+      : "Task Marked As Pending",
+
+    task
+})
     } catch (error) {
-        return res.status(500).json({
-            message:error.message
-        })
-    }
+    console.log(error)
+
+    return res.status(500).json({
+        message:error.message
+    })
+}
 }
 
 const getAnalytics = async (req,res)=>{

@@ -29,4 +29,15 @@ export const deleteTask = async (id)=>{
     return await taskApi.delete(`/${id}`)
 }
 
+export const getTaskStats = async ()=>{
+    return await taskApi.get('/stats')
+}
+
+export const getAnalytics = async ()=>{
+    return await taskApi.get('/analytics')
+}
+
+export const completeTask = async (id)=>{
+    return await taskApi.patch(`/${id}/complete`)
+}
 export default taskApi

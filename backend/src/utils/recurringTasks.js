@@ -1,15 +1,29 @@
-const getNextDueDate = (dueDate,recurringTask)=>{
+const getNextDueDate = (dueDate, recurringType) => {
+
+    if(!dueDate){
+        return null
+    }
+
     const nextDate = new Date(dueDate)
 
-    if (recurringTask === "daily") {
-        nextDate.setDate(nextDate.getDate()+1)
+    if(recurringType === "daily"){
+        nextDate.setDate(
+            nextDate.getDate() + 1
+        )
     }
-    if (recurringTask === "weekly") {
-        nextDate.setDate(nextDate.getDate()+7)
+
+    if(recurringType === "weekly"){
+        nextDate.setDate(
+            nextDate.getDate() + 7
+        )
     }
-    if (recurringTask === "monthly") {
-        nextDate.setDate(nextDate.getMonth()+1)
+
+    if(recurringType === "monthly"){
+        nextDate.setMonth(
+            nextDate.getMonth() + 1
+        )
     }
+
     return nextDate
 }
 
