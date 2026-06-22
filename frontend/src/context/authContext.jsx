@@ -4,9 +4,7 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({children})=>{
   const [user,setUser] = useState(null)
-  const [token,setToken] = useState(
-    localStorage.getItem("token") || null
-  )
+  const [token,setToken] = useState(localStorage.getItem("token") || null)
   const [isAuthenticated,setIsAuthenticated] = useState(!!localStorage.getItem("token"))
 
   const login  = (userData,jwtToken)=>{
@@ -19,7 +17,7 @@ const AuthProvider = ({children})=>{
   const logout = () =>{
     setUser(null)
     setToken(null)
-    isAuthenticated(false)
+    setIsAuthenticated(false)
     localStorage.removeItem("token")
   }
   
