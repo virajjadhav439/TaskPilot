@@ -27,9 +27,23 @@ const Dashboard = () => {
   return (<>
     <Navbar/>
     <div className="pt-28 px-6">
-      <h1>TaskPilot Dashboard</h1>
-      <p>Welcome Back</p>
+      <div className="mb-8">
+  <h1 className="text-4xl font-bold">
+    Dashboard
+  </h1>
 
+  <p className="text-gray-500 mt-2">
+    Welcome back, manage your tasks efficiently.
+  </p>
+</div>
+
+      <TaskForm fetchTasks={fetchTasks}/>
+
+      <div className="m-4">
+  <h1 className="text-3xl font-bold">
+    Tasks
+  </h1>
+</div>
       {tasks.map(task => (
    <TaskCard
       key={task._id}
@@ -38,7 +52,6 @@ const Dashboard = () => {
    />
 ))}
     </div>
-    <TaskForm fetchTasks={fetchTasks}/>
   </>
   )
 }

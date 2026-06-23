@@ -1,5 +1,5 @@
 import { completeTask, deleteTask, updateTask } from '@/services/taskApi'
-import { PenLine, Trash } from 'lucide-react'
+import { CheckCircle2, Clock3, PenLine, Trash, Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -58,7 +58,8 @@ toast.success(
   }
   return (
     <>
-    <div>
+    
+    <div className='bg-white border rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 mt-2'>
 
   {isEditing ? (
     <>
@@ -160,52 +161,129 @@ toast.success(
     </>
   ) : (
     <>
+    <div className="flex justify-between items-start">
+  <div className="flex items-center gap-3">
+
     <input
-  type="checkbox"
-  checked={task.status === "completed"}
-  disabled={
-    task.isRecurring &&
-    task.status === "completed"
-  }
-  onChange={() =>
-    handleCompleteTask(task._id)
-  }
-/>
+      type="checkbox"
+      checked={task.status === "completed"}
+      disabled={
+        task.isRecurring &&
+        task.status === "completed"
+      }
+      onChange={() =>
+        handleCompleteTask(task._id)
+      }
+    />
 
-      <h3
-  style={{
-    textDecoration:
-      task.status === "completed"
-        ? "line-through"
-        : "none"
-  }}
->
-  {task.title}
-</h3>
+    <h3
+      className={`font-medium text-xl ${
+        task.status === "completed"
+          ? "line-through opacity-70"
+          : ""
+      }`}
+    >
+      {task.title}
+    </h3>
 
-      <p>{task.status}</p>
+  </div>
 
-      <p>{task.priority}</p>
-  <p>
-  Recurring:
-  {task.isRecurring ? "Yes" : "No"}
-</p>
-      {task.status !== "completed" && (
-  <button
-    onClick={() => setIsEditing(true)}
-  >
-    <PenLine />
-  </button>
-)}
+  <div className="flex items-center gap-3">
 
+    {task.status !== "completed" && (
       <button
-        onClick={() =>
-          handleDeleteTask(task._id)
-        }
+        onClick={() => setIsEditing(true)}
       >
-        <Trash />
+        <PenLine size={18}/>
       </button>
-      <p>{task.dueDate}</p>
+    )}
+
+    <button
+      onClick={() =>
+        handleDeleteTask(task._id)
+      }
+    >
+      <Trash2 size={18}/>
+    </button>
+
+  </div>
+</div>
+
+      <div
+  className={`
+    flex items-center gap-2 mt-3 text-sm
+    ${
+      task.status === "completed"
+        ? "text-green-600"
+        : "text-yellow-600"
+    }
+  `}
+>
+  {task.status === "completed"
+    ? (
+      <>
+        <CheckCircle2 size={16}/>
+        <span>Completed</span>
+      </>
+    )
+    : (
+      <>
+        <Clock3 size={16}/>
+        <span>Pending</span>
+      </>
+    )}
+
+      <span
+className={`
+  px-3 py-1 rounded-full text-xs font-medium
+  
+  ${
+    task.priority === "high"
+    ? "bg-red-100 text-red-600"
+    : task.priority === "medium"
+    ? "bg-yellow-100 text-yellow-600"
+    : "bg-green-100 text-green-600"
+  }
+  `}
+>
+{task.priority}
+</span>
+  </div>
+
+  <div className="flex gap-3 mt-4 flex-wrap">
+
+  <span
+    className="
+      px-3 py-1
+      rounded-full
+      text-xs
+      font-medium
+      bg-gray-100
+    "
+  >
+    {task.isRecurring
+      ? "Recurring"
+      : "One Time"}
+  </span>
+
+  {task.dueDate && (
+    <span
+      className="
+        px-3 py-1
+        rounded-full
+        text-xs
+        font-medium
+        bg-blue-100
+        text-blue-600
+      "
+    >
+      {new Date(
+        task.dueDate
+      ).toLocaleDateString()}
+    </span>
+  )}
+
+</div>
     </>
   )}
 
