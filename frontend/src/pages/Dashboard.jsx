@@ -26,7 +26,7 @@ const Dashboard = () => {
 
   return (<>
     <Navbar/>
-    <div>
+    <div className="pt-28 px-6">
       <h1>TaskPilot Dashboard</h1>
       <p>Welcome Back</p>
 

@@ -1,5 +1,6 @@
 import RecentTasks from '@/components/dashboard/RecentTasks'
 import StatusCards from '@/components/dashboard/StatusCards'
+import Navbar from '@/components/shared/Navbar'
 import { getAnalytics, getTasks } from '@/services/taskApi'
 import React, { useEffect, useState } from 'react'
 
@@ -27,13 +28,30 @@ const Analytics = () => {
 
   return (
     <>
-    
-      <div>
-  <h1>Analytics</h1>
+    {/* navbar */}
+    <div>
+      <Navbar/>
+    </div>
+    {/* analytics page */}
+      <div className='min-h-screen p-6 pt-28 px-6'>
+        {/* analytics Container */}
+        <div className='mb-8'>
+          {/* Analytics heading */}
+      <h1 className='text-4xl font-bold'>Analytics</h1>
 
+      <p className='text-gray-500 mt-2'>Monitor your productivity and task progress</p>
+
+        </div>
+
+<div>
 <StatusCards analytics={analytics}/>
+</div>
 
+{/* recent Tasks Container */}
+<div className='mt-8'>
 <RecentTasks tasks={tasks} />
+</div>
+
 </div>
     </>
   )
