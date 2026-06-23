@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { createTask } from '@/services/taskApi'
 import toast from 'react-hot-toast'
-
+import { ChevronDownCircle } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
 const TaskForm = ({fetchTasks}) => {
+  // collapse and Expand
+const [isOpen,setIsOpen] = useState(false);
 
-    const [title,setTitle] = useState("")
+const [title,setTitle] = useState("")
 const [description,setDescription] = useState("")
 const [priority,setPriority] = useState("medium")
 
@@ -13,10 +16,14 @@ const [dueDate,setDueDate] = useState("")
 const [isRecurring,setIsRecurring] = useState(false)
 
 const [recurringType,setRecurringType] = useState("daily")
+const [isLoading,setIsLoading] = useState(false)
+
+// Auto Focus on Title
+const titleRef =  useRef(null)
 
     const handleSubmit = async (e)=>{
         e.preventDefault()
-
+      setIsLoading(true)
         try {
             if(!title.trim()){
 
@@ -32,8 +39,18 @@ const [recurringType,setRecurringType] = useState("daily")
 
     return
 }
-
-            const response = await createTask({
+if (
+  dueDate &&
+  new Date(dueDate) <
+  new Date().setHours(0,0,0,0)
+){
+  toast.error(
+    "Due date cannot be in the past"
+  )
+  return
+}
+// Create Task
+await createTask({
     title,
     description,
     priority,
@@ -45,22 +62,20 @@ const [recurringType,setRecurringType] = useState("daily")
         : null,
 })
 
-            console.log(response.data)
+            
 
             toast.success("Task Created")
-
             setTitle("")
-setDescription("")
-setPriority("medium")
-setDueDate("")
-setIsRecurring(false)
-setRecurringType("daily")
+            setDescription("")
+            setPriority("medium")
+            setDueDate("")
+            setIsRecurring(false)
+            setRecurringType("daily")
+            setIsLoading(false)
+            titleRef.current?.focus()
 
 await fetchTasks()
         } catch (error) {
-
-            console.log(error)
-
             toast.error("Failed To Create Task")
         }
         
@@ -68,12 +83,60 @@ await fetchTasks()
 
     return (
         <div className='bg-white rounded-2xl border shadow-sm p-6 mt-6'>
-          <div className="mb-8">
+          <div className="mb-4">
+  <div
+  className="
+    flex
+    justify-between
+    items-center
+    cursor-pointer
+  "
+  onClick={() =>
+    setIsOpen(!isOpen)
+  }
+>
+
   <h1 className="text-2xl font-bold">
     Create New Task
   </h1>
+
+  <ChevronDownCircle
+  className={`
+    transition-transform
+    duration-400
+    ${
+      isOpen
+        ? "rotate-180"
+        : ""
+    }
+  `}
+/>
+
 </div>
-            <form onSubmit={handleSubmit} className='space-y-4'>
+
+</div>
+<AnimatePresence>
+
+  {isOpen && (
+
+    <motion.div
+      initial={{
+        opacity: 0,
+        height: 0
+      }}
+      animate={{
+        opacity: 1,
+        height: "auto"
+      }}
+      exit={{
+        opacity: 0,
+        height: 0
+      }}
+      transition={{
+        duration: 0.3
+      }}
+    >
+      <form onSubmit={handleSubmit} className='space-y-4'>
                 {/* title */}
                 <input
                     type="text"
@@ -81,6 +144,7 @@ await fetchTasks()
                     value={title}
                     onChange={(e)=>setTitle(e.target.value)}
                     className='w-full border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-zinc-300'
+                    ref={titleRef}
                 />
                  {/* description */}
                 <textarea
@@ -152,12 +216,31 @@ await fetchTasks()
 )}
 </div>
                 {/* submit */}
-                <button type="submit"
-                className='bg-zinc-800 text-white px-5 py-3 rounded-xl hover:bg-black transition-all font-medium'>
-                    Create Task
-                </button>
+                <button
+  type="submit"
+  disabled={isLoading}
+  className="
+    bg-zinc-800
+    text-white
+    px-5
+    py-3
+    rounded-xl
+    hover:bg-black
+    transition-all
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+  "
+>
+  {isLoading ? "Creating..." : "Create Task"}
+</button>
 
             </form>
+    </motion.div>
+
+  )}
+
+</AnimatePresence>
+            
 
         </div>
     )

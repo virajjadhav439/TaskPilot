@@ -1,7 +1,8 @@
 import { completeTask, deleteTask, updateTask } from '@/services/taskApi'
-import { CheckCircle2, Clock3, PenLine, Trash, Trash2 } from 'lucide-react'
+import { CheckCircle2, Clock3, Eye, PenLine, Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
+import { DialogContent, DialogHeader, DialogTitle, DialogTrigger,Dialog } from '../ui/dialog'
 
 const TaskCard = ({task,fetchTasks}) => {
   const [isEditing,setIsEditing] = useState(false)
@@ -16,7 +17,6 @@ const TaskCard = ({task,fetchTasks}) => {
   try {
     const response = await updateTask(id,data)
 
-    console.log(response.data)
 
     toast.success("Task Updated")
 
@@ -34,8 +34,7 @@ const TaskCard = ({task,fetchTasks}) => {
   const handleDeleteTask= async (id)=>{
     try {
       
-      const response = await deleteTask(id)
-      console.log(response.data);
+      await deleteTask(id)
       toast.success("Task Deleted")
       fetchTasks()
     } catch (error) {
@@ -61,103 +60,164 @@ toast.success(
     
     <div className='bg-white border rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 mt-2'>
 
+{/* edit page */}
   {isEditing ? (
     <>
-      <input
-        type="text"
-        value={title}
-        onChange={(e)=>setTitle(e.target.value)}
-      />
+  <div className="space-y-4">
 
-      <textarea
-  value={description}
-  onChange={(e)=>
-    setDescription(e.target.value)
-  }
-/>
+    <input
+      type="text"
+      value={title}
+      onChange={(e)=>setTitle(e.target.value)}
+      placeholder="Task Title"
+      className="
+        w-full
+        border
+        rounded-xl
+        p-3
+        focus:outline-none
+        focus:ring-2
+        focus:ring-zinc-300
+      "
+    />
 
-<input
-  type="date"
-  value={dueDate}
-  onChange={(e)=>
-    setDueDate(e.target.value)
-  }
-/>
+    <textarea
+      value={description}
+      onChange={(e)=>setDescription(e.target.value)}
+      placeholder="Task Description"
+      rows={3}
+      className="
+        w-full
+        border
+        rounded-xl
+        p-3
+        resize-none
+        focus:outline-none
+        focus:ring-2
+        focus:ring-zinc-300
+      "
+    />
 
-<label>
-
-  <input
-    type="checkbox"
-    checked={isRecurring}
-    onChange={(e)=>
-      setIsRecurring(e.target.checked)
-    }
-  />
-
-  Recurring
-
-</label>
-{isRecurring && (
-  <select
-    value={recurringType}
-    onChange={(e)=>
-      setRecurringType(e.target.value)
-    }
-  >
-    <option value="daily">
-      Daily
-    </option>
-
-    <option value="weekly">
-      Weekly
-    </option>
-
-    <option value="monthly">
-      Monthly
-    </option>
-
-  </select>
-)}
+    <div className="flex flex-wrap gap-4 items-center">
 
       <select
         value={priority}
         onChange={(e)=>setPriority(e.target.value)}
+        className="
+          border
+          rounded-xl
+          px-3
+          py-2
+        "
       >
         <option value="low">Low</option>
         <option value="medium">Medium</option>
         <option value="high">High</option>
       </select>
 
+      <input
+        type="date"
+        value={dueDate}
+        onChange={(e)=>setDueDate(e.target.value)}
+        className="
+          border
+          rounded-xl
+          px-3
+          py-2
+        "
+      />
+
+      <label className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          checked={isRecurring}
+          onChange={(e)=>
+            setIsRecurring(e.target.checked)
+          }
+        />
+        Recurring
+      </label>
+
+      {isRecurring && (
+        <select
+          value={recurringType}
+          onChange={(e)=>
+            setRecurringType(e.target.value)
+          }
+          className="
+            border
+            rounded-xl
+            px-3
+            py-2
+          "
+        >
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      )}
+
+    </div>
+
+    <div className="flex gap-3">
+
       <button
+        className="
+          bg-zinc-800
+          text-white
+          px-5
+          py-2
+          rounded-xl
+          hover:bg-black
+          transition-all
+        "
         onClick={() =>
-          handleUpdateTask(
-  task._id,
-  {
-    title,
-    description,
-    priority,
-    dueDate,
-    isRecurring,
-    recurringType:
-      isRecurring
-        ? recurringType
-        : null
-  }
-)
+          handleUpdateTask(task._id,{
+            title,
+            description,
+            priority,
+            dueDate,
+            isRecurring,
+            recurringType: isRecurring
+              ? recurringType
+              : null
+          })
         }
       >
         Save
       </button>
 
       <button
+        className="
+          border
+          px-5
+          py-2
+          rounded-xl
+          hover:bg-gray-100
+          transition-all
+        "
         onClick={()=>{
           setTitle(task.title)
+          setDescription(task.description)
           setPriority(task.priority)
+          setDueDate(
+            task.dueDate
+              ? task.dueDate.split("T")[0]
+              : ""
+          )
+          setIsRecurring(task.isRecurring)
+          setRecurringType(
+            task.recurringType || "daily"
+          )
           setIsEditing(false)
         }}
       >
         Cancel
       </button>
+
+    </div>
+
+  </div>
     </>
   ) : (
     <>
@@ -203,8 +263,60 @@ toast.success(
         handleDeleteTask(task._id)
       }
     >
-      <Trash2 size={18}/>
+      <Trash2 size={18} className='text-red-600'/>
     </button>
+
+      <Dialog>
+  <DialogTrigger asChild>
+
+    <button>
+  <Eye size={18}/>
+</button>
+
+  </DialogTrigger>
+
+  <DialogContent>
+
+  <DialogHeader>
+
+    <DialogTitle>
+      {task.title}
+    </DialogTitle>
+
+  </DialogHeader>
+
+  <div className="space-y-4">
+
+    <p>
+      {task.description}
+    </p>
+
+    <p>
+      Status: {task.status}
+    </p>
+
+    <p>
+      Priority: {task.priority}
+    </p>
+
+    <p>
+      Recurring:
+      {task.isRecurring ? "Yes" : "No"}
+    </p>
+
+    {task.dueDate && (
+      <p>
+        Due:
+        {new Date(task.dueDate)
+          .toLocaleDateString()}
+      </p>
+    )}
+
+  </div>
+
+</DialogContent>
+
+</Dialog>
 
   </div>
 </div>
@@ -262,7 +374,7 @@ className={`
     "
   >
     {task.isRecurring
-      ? "Recurring"
+      ? "Repeating"
       : "One Time"}
   </span>
 
