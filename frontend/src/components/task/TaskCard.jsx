@@ -279,7 +279,7 @@ toast.success(
 
   <DialogHeader>
 
-    <DialogTitle>
+    <DialogTitle className={'text-2xl'}>
       {task.title}
     </DialogTitle>
 
@@ -287,32 +287,90 @@ toast.success(
 
   <div className="space-y-4">
 
-    <p>
-      {task.description}
-    </p>
+  <p className="text-zinc-700 leading-relaxed">
+    {task.description || "No description provided"}
+  </p>
 
-    <p>
-      Status: {task.status}
-    </p>
+  {/* Status / Priority / Recurring */}
+  <div className="flex flex-wrap gap-2">
 
-    <p>
-      Priority: {task.priority}
-    </p>
+    <span
+      className={`
+        px-3 py-1 rounded-full text-xs font-medium
+        ${
+          task.status === "completed"
+            ? "bg-green-100 text-green-600"
+            : "bg-yellow-100 text-yellow-600"
+        }
+      `}
+    >
+      {task.status === "completed"
+        ? "Completed"
+        : "Pending"}
+    </span>
 
-    <p>
-      Recurring:
-      {task.isRecurring ? "Yes" : "No"}
-    </p>
+    <span
+      className={`
+        px-3 py-1 rounded-full text-xs font-medium
+        ${
+          task.priority === "high"
+            ? "bg-red-100 text-red-600"
+            : task.priority === "medium"
+            ? "bg-yellow-100 text-yellow-600"
+            : "bg-green-100 text-green-600"
+        }
+      `}
+    >
+      {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority
+    </span>
+
+    <span
+      className="
+        px-3 py-1 rounded-full text-xs
+        bg-purple-100 text-purple-600
+      "
+    >
+      {task.isRecurring
+  ? task.recurringType
+  : "One Time"}
+    </span>
+
+  </div>
+
+  {/* Dates */}
+  <div className="flex flex-wrap gap-2">
 
     {task.dueDate && (
-      <p>
+      <span
+        className="
+          px-3 py-1 rounded-full text-xs
+          bg-blue-100 text-blue-600
+        "
+      >
         Due:
+        {" "}
         {new Date(task.dueDate)
           .toLocaleDateString()}
-      </p>
+      </span>
+    )}
+
+    {task.completedAt && (
+      <span
+        className="
+          px-3 py-1 rounded-full text-xs
+          bg-green-100 text-green-700
+        "
+      >
+        Completed:
+        {" "}
+        {new Date(task.completedAt)
+          .toLocaleDateString()}
+      </span>
     )}
 
   </div>
+
+</div>
 
 </DialogContent>
 
