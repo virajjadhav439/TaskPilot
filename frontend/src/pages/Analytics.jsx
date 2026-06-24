@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 const Analytics = () => {
   const [analytics,setAnalytics]=useState({})
   const [tasks,setTasks] = useState([])
-
+  const [loading,setLoading] = useState(true)
   const fetchTasks = async ()=>{
   const response = await getTasks()
   setTasks(response.data.tasks)
@@ -20,6 +20,8 @@ const Analytics = () => {
       setAnalytics(response.data)
     } catch (error) {
       
+    }finally{
+      setLoading(false)
     }
   }
   useEffect(()=>{
@@ -45,7 +47,7 @@ const Analytics = () => {
         </div>
 
 <div>
-<StatusCards analytics={analytics}/>
+<StatusCards analytics={analytics} loading={loading}/>
 </div>
 
 <div>
