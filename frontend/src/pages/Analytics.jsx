@@ -1,3 +1,4 @@
+import AnalyticsChart from '@/components/dashboard/AnalyticsChart'
 import RecentTasks from '@/components/dashboard/RecentTasks'
 import StatusCards from '@/components/dashboard/StatusCards'
 import Navbar from '@/components/shared/Navbar'
@@ -45,6 +46,10 @@ const Analytics = () => {
 
 <div>
 <StatusCards analytics={analytics}/>
+</div>
+
+<div>
+  <AnalyticsChart analytics={analytics}/>
 </div>
 
 {/* recent Tasks Container */}

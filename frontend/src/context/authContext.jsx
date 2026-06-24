@@ -12,6 +12,7 @@ const AuthProvider = ({children})=>{
     setToken(jwtToken)
     setIsAuthenticated(true)
     localStorage.setItem("token",jwtToken)
+    localStorage.setItem("user",JSON.stringify(userData))
   }
 
   const logout = () =>{
