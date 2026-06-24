@@ -6,7 +6,6 @@ const authApi = axios.create({
 
 
 export const signupUser = async (data) =>{
-    console.log(data);
     return await authApi.post("/signup",data)
 }
 

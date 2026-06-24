@@ -2,7 +2,7 @@ import { completeTask, deleteTask, updateTask } from '@/services/taskApi'
 import { CheckCircle2, Clock3, Eye, PenLine, Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { DialogContent, DialogHeader, DialogTitle, DialogTrigger,Dialog } from '../ui/dialog'
+import { DialogContent, DialogHeader, DialogTitle, DialogTrigger,Dialog, DialogClose } from '../ui/dialog'
 
 const TaskCard = ({task,fetchTasks}) => {
   const [isEditing,setIsEditing] = useState(false)
@@ -257,15 +257,41 @@ toast.success(
         <PenLine size={18}/>
       </button>
     )}
-
+{/* Delete Task Dialog */}
+<Dialog>
+  <DialogTrigger asChild>
     <button
-      onClick={() =>
-        handleDeleteTask(task._id)
-      }
-    >
+      
+        >
       <Trash2 size={18} className='text-red-600'/>
     </button>
+  </DialogTrigger>
 
+<DialogContent>
+  <DialogHeader>
+    <DialogTitle className={'text-2xl'}>
+      Delete this Task?
+    </DialogTitle>
+  </DialogHeader>
+  <div className='gap-2 space-x-2'>
+  <button className='border border-red-500 rounded-2xl px-4 py-2 text-red-600 
+  hover:text-white hover:bg-red-500 hover:transition-all hover:duration-300'
+  onClick={() =>handleDeleteTask(task._id)}
+      >
+    Delete
+    </button>
+    <DialogClose asChild>
+    <button className='border border-black rounded-2xl px-4 py-2 text-zinc-800 
+  hover:text-white hover:bg-black hover:transition-all hover:duration-300'>
+    Cancel
+    </button>
+    </DialogClose>
+
+  </div>
+</DialogContent>
+</Dialog>
+
+{/* View Task Dialog */}
       <Dialog>
   <DialogTrigger asChild>
 

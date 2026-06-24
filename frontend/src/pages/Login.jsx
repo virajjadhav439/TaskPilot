@@ -4,11 +4,12 @@ import { loginUser } from '@/services/authApi'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
+import { Eye, EyeOff } from "lucide-react"
 
 const Login = () => {
   const [email,setEmail]=useState('')
   const [password,setPassword] =useState('')
-  
+    const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
   const {login} = useAuth()
 
@@ -26,26 +27,63 @@ const Login = () => {
   }
   return (<>
   {/* login page */}
-  <div>
+  <div className='min-h-screen bg-gray-50 flex items-center justify-center px-6'>
     {/* login container */}
-    <div>
+    <div className='bg-white border rounded-2xl shadow-lg p-8 w-full max-w-md'>
       {/* login heading */}
-      <h1>Login</h1>
+      <h1 className='text-3xl font-bold'> Welcome Back</h1>
       {/* login subheading */}
-      <h3>Login to be Consistent</h3>
+      <h3 className='text-gray-500 mt-2 mb-6'>Login to continue your productivity journey.</h3>
     {/* Login Form */}
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='space-y-4'>
       {/* Email Input */}
-      <input type="email" name='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='Enter Email'/>
+      <input type="email" name='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='Enter Email' className='w-full border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-zinc-300'/>
       {/* Password Input */}
-      <input type="password" name='password' value={password} onChange={(e)=>setPassword(e.target.value)} placeholder='Enter Password'/>
-      <button type='submit' >Login</button>
+      <div className="relative">
+      
+        <input
+          type={showPassword ? "text" : "password"}
+          value={password}
+          onChange={(e)=>setPassword(e.target.value)}
+          placeholder="Enter Password"
+          className="
+            w-full
+            border
+            rounded-xl
+            p-3
+            pr-12
+          "
+        />
+      
+        <button
+          type="button"
+          onClick={() =>
+            setShowPassword(!showPassword)
+          }
+          className="
+            absolute
+            right-3
+            top-1/2
+            -translate-y-1/2
+            text-gray-500
+          "
+        >
+          {showPassword
+            ? <EyeOff size={18}/>
+            : <Eye size={18}/>
+          }
+        </button>
+      
+      </div>
+      <button type='submit' className='w-full bg-zinc-800 text-white py-3 rounded-xl hover:bg-black transition-al duration-300 ease-in-out' >Login</button>
     </form>
-    <h3>Don't have a account? 
-<Link to='/signup'>
+    <p className='text-center mt-6 text-gray-600'>
+      Don't have an account?{" "}
+
+<Link to='/signup' className='font-medium text-black hover:underline fade-in'>
       Signup
 </Link>
-    </h3>
+    </p>
     </div>
   </div>
   </>

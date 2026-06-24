@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-        <Toaster position='bottom-left' />
+        <Toaster position='top-center' />
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>} />

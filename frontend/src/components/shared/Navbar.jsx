@@ -1,6 +1,7 @@
 import { AuthContext } from '@/context/authContext'
 import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext)
@@ -24,10 +25,37 @@ const handleLogout = () => {
         <Link className="text-gray-600 hover:text-black transition-colors font-medium" to='/profile'>Profile</Link>
     </div>
     {/* logout */}
+    {/* Delete Task Dialog */}
+<Dialog>
+  <DialogTrigger asChild>
     <button className='bg-zinc-800 text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300 cursor-pointer'
-    onClick={handleLogout}>
+    >
     Logout
     </button>
+  </DialogTrigger>
+
+<DialogContent>
+  <DialogHeader>
+    <DialogTitle className={'text-2xl'}>
+      Delete this Task?
+    </DialogTitle>
+  </DialogHeader>
+  <div className='gap-2 space-x-2'>
+  <button className='border border-black bg-zinc-800 text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300 cursor-pointer'
+    onClick={handleLogout}
+    >
+    Logout
+    </button>
+    <DialogClose asChild>
+    <button className='border border-black rounded-2xl px-4 py-2 text-zinc-800 
+  hover:text-white hover:bg-black hover:transition-all hover:duration-300'>
+    Cancel
+    </button>
+    </DialogClose>
+
+  </div>
+</DialogContent>
+</Dialog>
     </div>
     </nav>
   </>
