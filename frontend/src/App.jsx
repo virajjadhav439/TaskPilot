@@ -8,6 +8,7 @@ import Profile from './pages/Profile'
 import { Toaster } from 'react-hot-toast'
 import Home from './pages/Home'
 import ProtectedRoutes from './routes/ProtectedRoutes'
+import Calendar from './pages/Calendar'
 
 function App() {
   
@@ -32,6 +33,11 @@ function App() {
         <Route path='/profile' element={
           <ProtectedRoutes>
             <Profile/>
+          </ProtectedRoutes>
+          } />
+        <Route path='/calendar' element={
+          <ProtectedRoutes>
+            <Calendar/>
           </ProtectedRoutes>
           } />
       </Routes>

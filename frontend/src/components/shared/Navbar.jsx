@@ -20,6 +20,8 @@ const handleLogout = () => {
     </Link>
     {/* navigation */}
     <div className='flex gap-8 overflow-auto ml-10 mr-10'>
+        
+        <Link className="text-gray-600 hover:text-black transition-colors font-medium" to='/calendar'>Calendar</Link>
         <Link className="text-gray-600 hover:text-black transition-colors font-medium" to='/dashboard'>Dashboard</Link>
         <Link className="text-gray-600 hover:text-black transition-colors font-medium" to='/analytics' >Analytics</Link>
         <Link className="text-gray-600 hover:text-black transition-colors font-medium" to='/profile'>Profile</Link>

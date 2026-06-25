@@ -4,11 +4,13 @@ import StatusCards from '@/components/dashboard/StatusCards'
 import Navbar from '@/components/shared/Navbar'
 import { getAnalytics, getTasks } from '@/services/taskApi'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Analytics = () => {
   const [analytics,setAnalytics]=useState({})
   const [tasks,setTasks] = useState([])
   const [loading,setLoading] = useState(true)
+  
   const fetchTasks = async ()=>{
   const response = await getTasks()
   setTasks(response.data.tasks)
@@ -19,7 +21,7 @@ const Analytics = () => {
       const response = await getAnalytics()
       setAnalytics(response.data)
     } catch (error) {
-      
+      toast.error("Getting Analytics failed")
     }finally{
       setLoading(false)
     }

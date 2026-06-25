@@ -7,6 +7,7 @@ const Profile = () => {
 
   const [user,setUser] = useState(null)
   const [analytics,setAnalytics]=useState({})
+  const [loading,setLoading] = useState(true)
   useEffect(()=>{
       const storedUser = localStorage.getItem("user")
       setUser(JSON.parse(storedUser))
@@ -17,7 +18,9 @@ const Profile = () => {
           const response = await getAnalytics()
           setAnalytics(response.data)
         } catch (error) {
-          
+        toast.error("Getting Analytics failed")
+        }finally{
+          setLoading(false)
         }
       }
 
@@ -68,7 +71,10 @@ const Profile = () => {
     <h2 className='text-2xl font-semibold mt-8 mb-4'>
   Statistics
 </h2>
-<StatusCards analytics={analytics}/>
+
+<div>
+<StatusCards analytics={analytics} loading={loading}/>
+</div>
     </div>
   </>
   )

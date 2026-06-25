@@ -11,11 +11,8 @@ const Dashboard = () => {
         try {
             const response = await getTasks()
             setTasks(response.data.tasks)
-
         } catch (error) {
-
             console.log(error)
-
         }
     }
 
@@ -43,6 +40,7 @@ const Dashboard = () => {
   <h1 className="text-3xl font-bold">
     Tasks
   </h1>
+  
 </div>
       {tasks.map(task => (
    <TaskCard

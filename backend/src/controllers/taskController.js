@@ -5,12 +5,12 @@ const createTask = async (req,res)=>{
     
     try {
         // Fetch the Details
-    const {title,description,status,priority,dueDate,isRecurring,recurringType} = req.body
+    const {title,description,status,priority,dueDate,isRecurring,recurringType,category} = req.body
     //Create a New Task
     const task = await Task.create({
         title,description,status,priority,dueDate,user:req.user.userId,
         isRecurring,
-        recurringType
+        recurringType,category
     })
 
     return res.status(201).json({
@@ -69,7 +69,7 @@ const getMyTask = async (req,res)=>{
 const updateTask = async (req,res)=>{
     try {
 
-        const {title,description,status,priority,dueDate} = req.body
+        const {title,description,status,priority,dueDate,category} = req.body
 
         const task = await Task.findById(req.params.id)
 
@@ -92,7 +92,8 @@ const updateTask = async (req,res)=>{
         description,
         status,
         priority,
-        dueDate
+        dueDate,
+        category
     },
     {
         returnDocument:"after"

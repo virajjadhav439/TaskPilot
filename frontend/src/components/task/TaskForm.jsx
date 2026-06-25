@@ -17,6 +17,8 @@ const [isRecurring,setIsRecurring] = useState(false)
 
 const [recurringType,setRecurringType] = useState("daily")
 const [isLoading,setIsLoading] = useState(false)
+const [category, setCategory] = useState("Personal")
+
 
 // Auto Focus on Title
 const titleRef =  useRef(null)
@@ -56,6 +58,7 @@ await createTask({
     priority,
     dueDate,
     isRecurring,
+    category,
     recurringType:
       isRecurring
         ? recurringType
@@ -72,6 +75,7 @@ await createTask({
             setIsRecurring(false)
             setRecurringType("daily")
             setIsLoading(false)
+            setCategory("Personal")
             titleRef.current?.focus()
 
 await fetchTasks()
@@ -213,7 +217,28 @@ await fetchTasks()
 
   </select>
 
+
 )}
+
+<select
+  value={category}
+  onChange={(e) =>
+    setCategory(e.target.value)
+  }
+  className="
+    border
+    rounded-xl
+    px-3
+    py-2
+  "
+>
+  <option>Personal</option>
+  <option>Work</option>
+  <option>Study</option>
+  <option>Health</option>
+  <option>Finance</option>
+  <option>Other</option>
+</select>
 </div>
                 {/* submit */}
                 <button

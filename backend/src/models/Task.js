@@ -40,6 +40,11 @@ const taskSchema = new mongoose.Schema({
         enum:["daily","weekly","monthly",null],
         default:null,
     },
+    category:{
+        type:String,
+        enum:["Personal","Work","Study","Health","Finance","Other"],
+        default:"Personal",
+    },
 },{
     timestamps:true,
 })

@@ -12,10 +12,19 @@ const TaskCard = ({task,fetchTasks}) => {
   const [dueDate,setDueDate] =useState(task.dueDate ? task.dueDate.split("T")[0]: "")
   const [isRecurring,setIsRecurring] = useState(task.isRecurring)
   const [recurringType,setRecurringType] = useState(task.recurringType || "daily")
-
+  const [category,setCategory] = useState(task.category)
+  const categoryColors = {
+    Personal: "bg-blue-100 text-blue-600",
+    Work: "bg-purple-100 text-purple-600",
+    Study: "bg-green-100 text-green-600",
+    Health: "bg-red-100 text-red-600",
+    Finance: "bg-yellow-100 text-yellow-700",
+    Other: "bg-gray-100 text-gray-600",
+  }
+  
   const handleUpdateTask = async (id,data)=>{
   try {
-    const response = await updateTask(id,data)
+  await updateTask(id,data)
 
 
     toast.success("Task Updated")
@@ -157,6 +166,26 @@ toast.success(
         </select>
       )}
 
+<select
+  value={category}
+  onChange={(e) =>
+    setCategory(e.target.value)
+  }
+  className="
+    border
+    rounded-xl
+    px-3
+    py-2
+  "
+>
+  <option>Personal</option>
+  <option>Work</option>
+  <option>Study</option>
+  <option>Health</option>
+  <option>Finance</option>
+  <option>Other</option>
+</select>
+
     </div>
 
     <div className="flex gap-3">
@@ -178,6 +207,7 @@ toast.success(
             priority,
             dueDate,
             isRecurring,
+            category,
             recurringType: isRecurring
               ? recurringType
               : null
@@ -205,6 +235,7 @@ toast.success(
               ? task.dueDate.split("T")[0]
               : ""
           )
+          setCategory(task.category)
           setIsRecurring(task.isRecurring)
           setRecurringType(
             task.recurringType || "daily"
@@ -394,6 +425,18 @@ toast.success(
       </span>
     )}
 
+    <span
+  className={`
+    px-3 py-1
+    rounded-full
+    text-xs
+    font-medium
+    ${categoryColors[task.category]}
+  `}
+>
+  {task.category}
+</span>
+
   </div>
 
 </div>
@@ -478,6 +521,17 @@ className={`
       ).toLocaleDateString()}
     </span>
   )}
+<span
+  className={`
+    px-3 py-1
+    rounded-full
+    text-xs
+    font-medium
+    ${categoryColors[task.category]}
+  `}
+>
+  {task.category}
+</span>
 
 </div>
     </>

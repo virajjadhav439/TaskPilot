@@ -128,3 +128,21 @@
     @apply font-sans;
     }
 }
+
+.react-calendar__tile--now{
+    background:#dbeafe;
+    border-radius:10px;
+}
+
+.react-calendar__tile--active{
+    background:#18181b !important;
+    color:white;
+    border-radius:10px;
+}
+
+.react-calendar__tile:hover{
+    background:#f3f4f6;
+    border-radius:10px;
+    transition:.2s;
+}
+
