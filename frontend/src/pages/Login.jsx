@@ -37,13 +37,13 @@ const Login = () => {
   }
   return (<>
   {/* login page */}
-  <div className='min-h-screen bg-gray-50 flex items-center justify-center px-6'>
+  <div className='min-h-screen bg-card flex items-center justify-center px-6'>
     {/* login container */}
-    <div className='bg-white border rounded-2xl shadow-lg p-8 w-full max-w-md'>
+    <div className='bg-card border rounded-2xl shadow-lg p-8 w-full max-w-md'>
       {/* login heading */}
       <h1 className='text-3xl font-bold'> Welcome Back</h1>
       {/* login subheading */}
-      <h3 className='text-gray-500 mt-2 mb-6'>Login to continue your productivity journey.</h3>
+      <h3 className='text-muted-foreground mt-2 mb-6'>Login to continue your productivity journey.</h3>
     {/* Login Form */}
     <form onSubmit={handleSubmit} className='space-y-4'>
       {/* Email Input */}
@@ -75,7 +75,7 @@ const Login = () => {
             right-3
             top-1/2
             -translate-y-1/2
-            text-gray-500
+            text-muted-foreground
           "
         >
           {showPassword
@@ -85,11 +85,11 @@ const Login = () => {
         </button>
       
       </div>
-      <button type='submit' className='w-full bg-zinc-800 text-white py-3 rounded-xl hover:bg-black transition-al duration-300 ease-in-out' >Login</button>
+      <button type='submit' className='w-full bg-zinc-800 text-foregound py-3 rounded-xl hover:bg-black transition-al duration-300 ease-in-out' >Login</button>
     </form>
-    <p className='text-center mt-6 text-gray-600'>
+    <p className='text-center mt-6 text-muted-foreground'>
       Don't have an account?{" "}
-<Link to='/signup' className='font-medium text-black hover:underline fade-in'>
+<Link to='/signup' className='font-medium text-foreground hover:underline fade-in'>
       Signup
 </Link>
     </p>

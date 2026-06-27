@@ -67,7 +67,7 @@ toast.success(
   return (
     <>
     
-    <div className='bg-white border rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 mt-2'>
+    <div className='bg-card border rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 mt-2'>
 
 {/* edit page */}
   {isEditing ? (
@@ -312,8 +312,8 @@ toast.success(
     Delete
     </button>
     <DialogClose asChild>
-    <button className='border border-black rounded-2xl px-4 py-2 text-zinc-800 
-  hover:text-white hover:bg-black hover:transition-all hover:duration-300'>
+    <button className='border border-foreground rounded-2xl px-4 py-2 text-mutes-foreground 
+  hover:text-card hover:bg-foreground hover:transition-all hover:duration-300'>
     Cancel
     </button>
     </DialogClose>
@@ -497,7 +497,7 @@ className={`
       rounded-full
       text-xs
       font-medium
-      bg-gray-100
+      bg-card
     "
   >
     {task.isRecurring

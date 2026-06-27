@@ -86,7 +86,7 @@ await fetchTasks()
     }
 
     return (
-        <div className='bg-white rounded-2xl border shadow-sm p-6 mt-6'>
+        <div className='bg-card rounded-2xl border shadow-sm p-6 mt-6'>
           <div className="mb-4">
   <div
   className="

@@ -15,7 +15,7 @@ const AnalyticsChart = ({analytics}) => {
   ]
   const COLORS = ['#22c55e','#f59e0b']
   return (<>
-    <div className='bg-white border rounded-2xl shadow-sm p-6 mt-8'>
+    <div className='bg-card border rounded-2xl shadow-sm p-6 mt-8'>
     <h2 className='text-2xl font-semibold mb-6'>
       Task Distribution
     </h2>

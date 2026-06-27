@@ -2,8 +2,9 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  background: white;
-  border: none;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 2px;
   font-family: inherit;
@@ -22,6 +23,7 @@
   border: none;
   outline: none;
   background: transparent;
+  color: var(--foreground);
   transition: all 0.2s ease;
 }
 
@@ -45,7 +47,7 @@
 
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background: #f4f4f5;
+  background: var(--muted);
 }
 
 .react-calendar__month-view__weekdays {
@@ -53,7 +55,7 @@
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 600;
-  color: #71717a;
+  color: var(--muted-foreground);
   margin-bottom: 8px;
 }
 
@@ -66,6 +68,7 @@
   position: relative;
   height: 72px;
   background: transparent;
+  color: var(--foreground);
   border-radius: 14px;
   font-size: 16px;
   font-weight: 500;
@@ -73,36 +76,36 @@
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background: #f4f4f5;
+  background: var(--muted);
 }
 
 .react-calendar__tile--now {
-  background: #dbeafe !important;
-  color: #2563eb;
+  background: #2563eb22 !important;
+  color: #3b82f6 !important;
   font-weight: 700;
 }
 
 .react-calendar__tile--active {
-  background: #18181b !important;
-  color: white !important;
+  background: var(--primary) !important;
+  color: var(--primary-foreground) !important;
   font-weight: 700;
 }
 
 .react-calendar__tile--active:hover {
-  background: #27272a !important;
+  background: var(--primary) !important;
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: inherit;
+  color: var(--foreground);
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: #a1a1aa;
+  color: var(--muted-foreground);
 }
 
 .react-calendar__tile:disabled {
-  background: #f4f4f5;
-  color: #a1a1aa;
+  background: var(--muted);
+  color: var(--muted-foreground);
 }
 
 .react-calendar__tile--hasActive {
@@ -110,5 +113,5 @@
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
-  background: #e5e7eb;
+  background: var(--muted);
 }

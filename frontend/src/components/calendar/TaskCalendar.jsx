@@ -35,7 +35,7 @@ const TaskCalendar = () => {
   },[])
 
   return (<>
-    <div className="bg-white rounded-2xl border shadow-sm p-6 mt-5 flex justify-center">
+    <div className="bg-card rounded-2xl border shadow-sm p-6 mt-5 flex justify-center">
       <Calendar 
       value={date}
       onChange={setDate}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const taskApi = axios.create({
-    baseURL:"http://localhost:3000/api/tasks"
+    baseURL:`${import.meta.env.VITE_API_URL}/api/tasks`
 })
 
 taskApi.interceptors.request.use((config)=>{

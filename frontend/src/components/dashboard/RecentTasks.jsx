@@ -9,7 +9,7 @@ const RecentTasks = ({tasks}) => {
       
       <div className='space-y-4'>
       {tasks.slice(0,5).map((task)=>(
-        <div key={task._id} className='bg-white border rounded-xl p-4 shadow-sm hover:shadow-lg transition-all duration-300'>
+        <div key={task._id} className='bg-card border rounded-xl p-4 shadow-sm hover:shadow-lg transition-all duration-300'>
           <h4
   className={
     task.status === "completed"

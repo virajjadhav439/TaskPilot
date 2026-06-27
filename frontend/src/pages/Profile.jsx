@@ -42,7 +42,7 @@ const Profile = () => {
       Your TaskPilot Account Information
     </p>
 
-    <div className='bg-white border rounded-2xl shadow-sm p-6 mt-8 max-w-3xl flex grid-cols-2 gap-5 '>
+    <div className='bg-card border rounded-2xl shadow-sm p-6 mt-8 max-w-3xl flex grid-cols-2 gap-5 '>
       <h2 className='text-2xl font-semibold m-2'>
         User Information
       <div className="h-30 w-30 rounded-full bg-zinc-800 text-white flex items-center justify-center text-7xl font-bold mt-2 ">
@@ -51,17 +51,17 @@ const Profile = () => {
       </h2>
 <div className='mt-10 text-2xl font-medium'>
 
-      <div className='mt-5 border-zinc-200 border rounded-xl px-2 mb-2'>
+      <div className='mt-5 rounded-xl px-2 mb-2'>
         <p className="text-sm text-gray-500">Name:</p>
         <p className="font-medium">{user?.name}</p>
       </div>
 
-      <div className='border-zinc-200 border rounded-xl px-2 mb-2'>
+      <div className='rounded-xl px-2 mb-2'>
         <p className="text-sm text-gray-500">Email:</p>
         <p className="font-medium">{user?.email}</p>
       </div>
 
-      <div className='border-zinc-200 border rounded-xl px-2 mb-2'>
+      <div className='rounded-xl px-2 mb-2'>
         
         <p className="text-sm text-gray-500">Member Since:</p>
         <p className="font-medium"></p>

@@ -45,11 +45,11 @@ initial={{ opacity: 0, y: 60 }}
 
   <div className="max-w-3xl">
 
-    <h1 className="text-5xl md:text-7xl font-extrabold text-zinc-900 leading-tight">
+    <h1 className="text-5xl md:text-7xl font-extrabold text-foreground leading-tight">
       Schedule
     </h1>
 
-    <div className="text-5xl md:text-7xl font-extrabold text-zinc-700 h-20 md:h-24">
+    <div className="text-5xl md:text-7xl font-extrabold text-foreground h-20 md:h-24">
       <Typewriter
         options={{
           strings: [
@@ -103,13 +103,12 @@ Beautiful Dashboard
 Manage your tasks from one clean workspace.
 </p>
       {/* Dashboard */}
-      <div className="max-w-6xl mx-auto mt-24">
-
-<img
-src={Dashboard}
-alt="TaskPilot Dashboard"
-className="w-full rounded-xl shadow-2xl border hover:scale-[1.1] transition-all duration-500"/>
-
+      <div className="rounded-3xl overflow-hidden border border-border shadow-2xl bg-card p-3">
+    <img
+        src={Dashboard}
+        alt="TaskPilot Dashboard"
+        className="rounded-2xl w-full"
+    />
 </div>
       {/* Features */}
 <motion.section className="max-w-6xl mx-auto mt-32"
@@ -175,7 +174,7 @@ initial={{ opacity: 0, y: 60 }}
     </p>
 
     <Link to="/signup">
-      <button className="mt-10 bg-white text-black px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-all duration-500 cursor-pointer">
+      <button className="mt-10 bg-card text-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-all duration-500 cursor-pointer">
         Get Started
       </button>
     </Link>
@@ -204,18 +203,18 @@ initial={{ opacity: 0, y: 60 }}
 
     <div className="flex gap-6 text-zinc-600">
 
-      <Link to="/" className='text-zinc-700 hover:text-black hover:underline'>
+      <Link to="/" className='text-zinc-700 hover:text-foreground hover:underline'>
         Home
       </Link>
 
-      <Link to="/signup" className='text-zinc-700 hover:text-black hover:underline'>
+      <Link to="/signup" className='text-zinc-700 hover:text-foreground hover:underline'>
         Get Started
       </Link>
 
       <a
         href="https://github.com/virajjadhav439/TaskPilot"
         target="_blank"
-        rel="noopener noreferrer" className='text-zinc-700 hover:text-black hover:underline'
+        rel="noopener noreferrer" className='text-zinc-700 hover:text-foreground hover:underline'
       >
         GitHub
       </a>
