@@ -9,7 +9,7 @@ const TaskListForDay = ({ tasks, fetchTasks }) => {
       </p>
     );
   }
-
+  
   return (
     <div className="space-y-4 mt-6">
       {tasks.map((task) => (

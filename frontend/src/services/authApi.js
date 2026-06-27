@@ -10,6 +10,10 @@ export const signupUser = async (data) =>{
 }
 
 export const loginUser = async (data) =>{
-    return await authApi.post("/login",data)
+    return await authApi.post("/login",data)    
+}
+
+export const googleLogin = async (data)=>{
+    return await authApi.post("/google",data)
 }
 export default authApi;

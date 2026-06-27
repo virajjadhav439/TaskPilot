@@ -13,15 +13,13 @@ const TaskCalendar = () => {
   
   
   const fetchTasks = async ()=>{
-    try {
-      
-      const response = await getTasks()
-      setTasks(response.data.tasks)
-      
-    } catch (error) {
-      toast.error("Error Fetching Tasks")
-    }
-  }
+          try {
+              const response = await getTasks()
+              setTasks(response.data.tasks)
+          } catch (error) {
+              console.log(error)
+          }
+      }
   
   const selectedTasks = tasks.filter((task) => {
   if (!task.dueDate) return false;
@@ -31,7 +29,7 @@ const TaskCalendar = () => {
   );
 });
 
-
+// load after reload
   useEffect(()=>{
     fetchTasks()
   },[])
@@ -63,7 +61,7 @@ const TaskCalendar = () => {
     </div>
     <div>
       
-          <TaskListForDay tasks={selectedTasks} fetchtasks={fetchTasks} date={date} />
+          <TaskListForDay tasks={selectedTasks} fetchTasks={fetchTasks} />
         
     </div>
       </>

@@ -6,7 +6,8 @@ const AuthProvider = ({children})=>{
   const [user,setUser] = useState(null)
   const [token,setToken] = useState(localStorage.getItem("token") || null)
   const [isAuthenticated,setIsAuthenticated] = useState(!!localStorage.getItem("token"))
-
+  console.log(isAuthenticated);
+  
   const login  = (userData,jwtToken)=>{
     setUser(userData)
     setToken(jwtToken)

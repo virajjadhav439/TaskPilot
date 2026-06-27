@@ -1,10 +1,11 @@
 
 import useAuth from '@/hooks/useAuth'
-import { loginUser } from '@/services/authApi'
+import { googleLogin, loginUser } from '@/services/authApi'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff } from "lucide-react"
+import { GoogleLogin } from '@react-oauth/google'
 
 const Login = () => {
   const [email,setEmail]=useState('')
@@ -24,6 +25,15 @@ const Login = () => {
       console.log(error);
       toast.error('Login Failed')
     }
+  }
+  const handleGoogleLogin = async(credentialResponse)=>{
+    const response= await googleLogin({
+      credential:credentialResponse.credential
+    })
+    login(response.data.user,response.data.token)
+      toast.success('Login Successful')
+      navigate('/dashboard')
+    
   }
   return (<>
   {/* login page */}
@@ -79,11 +89,14 @@ const Login = () => {
     </form>
     <p className='text-center mt-6 text-gray-600'>
       Don't have an account?{" "}
-
 <Link to='/signup' className='font-medium text-black hover:underline fade-in'>
       Signup
 </Link>
     </p>
+<GoogleLogin onSuccess={handleGoogleLogin}
+onError={()=>{
+  toast.error("Google Login Failed")
+}}/>
     </div>
   </div>
   </>

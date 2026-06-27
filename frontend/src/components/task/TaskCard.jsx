@@ -21,7 +21,7 @@ const TaskCard = ({task,fetchTasks}) => {
     Finance: "bg-yellow-100 text-yellow-700",
     Other: "bg-gray-100 text-gray-600",
   }
-  
+
   const handleUpdateTask = async (id,data)=>{
   try {
   await updateTask(id,data)

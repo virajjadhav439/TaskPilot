@@ -229,6 +229,7 @@ console.log("Next Due Date:", nextDueDate)
         user:task.user,
         isRecurring:true,
         recurringType:task.recurringType,
+        category:task.category,
     })
 }
         

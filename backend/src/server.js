@@ -5,7 +5,7 @@ const app = require('./app');
 
 require('dotenv').config()
 
-// require("./cron/reminderCron")
+require("./cron/reminderCron")
 
 
 app.use(express.json())
