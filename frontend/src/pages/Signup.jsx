@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff } from "lucide-react"
-import useAuth from '@/hooks/useAuth'
+import useAuth from '@/context/hooks/useAuth'
 import { GoogleLogin } from '@react-oauth/google'
 
 const Signup = () => {

@@ -1,5 +1,5 @@
 
-import useAuth from '@/hooks/useAuth'
+import useAuth from '@/context/hooks/useAuth'
 import { googleLogin, loginUser } from '@/services/authApi'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
