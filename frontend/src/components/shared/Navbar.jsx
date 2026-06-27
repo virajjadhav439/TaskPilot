@@ -103,14 +103,14 @@ const handleLogout = () => {
 
     <Link
       to="/login"
-      className="bg-zinc-800 text-white px-3 md:px-4 py-1 md:py-2 rounded-full hover:bg-black transition-all duration-300"
+      className="bg-card text-foreground px-3 md:px-4 py-1 md:py-2 rounded-full hover:bg-foreground hover:text-card transition-all duration-300"
     >
       Login
     </Link>
 
     <Link
       to="/signup"
-      className="bg-card text-zinc-800 px-3 md:px-4 py-1 md:py-2 rounded-full hover:bg-black hover:text-white hover:scale-102 transition-all duration-300"
+      className="bg-card text-foreground px-3 md:px-4 py-1 md:py-2 rounded-full hover:bg-foreground hover:text-card hover:scale-102 transition-all duration-300"
     >
       Get Started
     </Link>

@@ -75,7 +75,7 @@ initial={{ opacity: 0, y: 60 }}
     <div className="flex flex-wrap gap-4 mt-10">
 
       <Link to="/signup">
-        <button className="bg-zinc-900 text-white px-8 py-4 rounded-xl hover:bg-black transition-all duration-300 shadow-lg hover:scale-105 cursor-pointer">
+        <button  className="border border-muted-foreground px-8 py-4 rounded-xl hover:bg-foreground hover:text-card transition-all duration-300 cursor-pointer">
           Get Started
         </button>
       </Link>
@@ -84,7 +84,7 @@ initial={{ opacity: 0, y: 60 }}
         to="https://github.com/virajjadhav439/TaskPilot"
         target="_blank"
       >
-        <button className="border border-zinc-300 px-8 py-4 rounded-xl hover:bg-zinc-100 transition-all duration-300 cursor-pointer">
+        <button className="border border-muted-foreground px-8 py-4 rounded-xl hover:bg-foreground hover:text-card transition-all duration-300 cursor-pointer">
           View GitHub
         </button>
       </Link>
@@ -174,7 +174,7 @@ initial={{ opacity: 0, y: 60 }}
     </p>
 
     <Link to="/signup">
-      <button className="mt-10 bg-card text-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-all duration-500 cursor-pointer">
+      <button className="mt-10 bg-card text-muted-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-all duration-500 cursor-pointer">
         Get Started
       </button>
     </Link>
@@ -195,26 +195,26 @@ initial={{ opacity: 0, y: 60 }}
         TaskPilot
       </h2>
 
-      <p className="text-zinc-500 mt-2">
+      <p className="text-muted-foreground mt-2">
         Build consistency. Stay productive.
       </p>
 
     </div>
 
-    <div className="flex gap-6 text-zinc-600">
+    <div className="flex gap-6 text-muted-foreground">
 
-      <Link to="/" className='text-zinc-700 hover:text-foreground hover:underline'>
+      <Link to="/" className='text-muted-foreground hover:text-foreground hover:underline'>
         Home
       </Link>
 
-      <Link to="/signup" className='text-zinc-700 hover:text-foreground hover:underline'>
+      <Link to="/signup" className='text-muted-foreground hover:text-foreground hover:underline'>
         Get Started
       </Link>
 
       <a
         href="https://github.com/virajjadhav439/TaskPilot"
         target="_blank"
-        rel="noopener noreferrer" className='text-zinc-700 hover:text-foreground hover:underline'
+        rel="noopener noreferrer" className='text-muted-foreground hover:text-foreground hover:underline'
       >
         GitHub
       </a>
