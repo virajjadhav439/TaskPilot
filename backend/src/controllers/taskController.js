@@ -186,8 +186,6 @@ const completeTask = async (req,res) =>{
                 message:"Task Not Found",
             })
         }
-        console.log("Task ID:", req.params.id)
-console.log("Before:", task.status)
         const wasPending = task.status === "pending"
         
         if(wasPending){
@@ -206,19 +204,12 @@ console.log("Before:", task.status)
 await task.save()
 
 if(task.isRecurring && wasPending){
-    console.log(
-      "Creating Next Recurring Task"
-    )
-
     const nextDueDate =
       getNextDueDate(
         task.dueDate,
         task.recurringType
       )
 
-      console.log("Current Due Date:", task.dueDate)
-console.log("Recurring Type:", task.recurringType)
-console.log("Next Due Date:", nextDueDate)
 
     await Task.create({
         title:task.title,
